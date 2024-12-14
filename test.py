@@ -1,5 +1,6 @@
 import unittest
-from solutions import isunique, ispermut, URLify
+import random
+from solutions import isunique, ispermut, URLify, ispalindrom_permut
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -20,7 +21,17 @@ class TestSolutions(unittest.TestCase):
         s = "Mr. John Smith"
         self.assertEqual("Mr.%20John%20Smith", URLify(s))
         self.assertEqual("%20", URLify(" "))
-        self.assertEqual("", URLify(""))
+        self.assertEqual('', URLify(''))
+
+    def test_ispalindrom_permut(self):
+        self.assertTrue(ispalindrom_permut("Tact Coa"))
+        s = list("abcba")
+        random.shuffle(s)
+        s = ''.join(s)
+        self.assertTrue(ispalindrom_permut(s))
+        self.assertTrue(ispalindrom_permut(''))
+        self.assertFalse(ispalindrom_permut("cdaabb"))
+        self.assertFalse(ispalindrom_permut("cd"))
 
 if __name__ == "__main__":
     unittest.main()

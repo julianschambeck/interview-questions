@@ -1,4 +1,5 @@
-# ---- Strings & Arrays (or rather lists in python) ----
+
+# Strings & Arrays (or rather lists in Python)
 
 # 1.1 check if all chars in string are unique
 # time complexity should be O(N), i.e. runs in linear time
@@ -28,6 +29,22 @@ def ispermut(s, other):
 def URLify(s):
     for idx, c in enumerate(chs:=list(s)):
         if chs[idx] == " ": chs[idx] = "%20"
-    return "".join(chs)
+    return ''.join(chs)
+
+# 1.4 check if string is a permutation of a palindrom
+# should be O(N)
+def ispalindrom_permut(s):
+    s = s.replace(" ", '').lower()
+    # we count '' as palindrom
+    if len(s) == 0 or len(s) == 1: return True
+
+    # cbaba is permut of abcba, thus should be True
+    counts = {}
+    for c in s: counts[c] = counts.get(c, 0) + 1
+    # each char needs to have a counterpart, abba -> aa bb
+    if len(s) % 2 == 0: return all(cnt % 2 == 0 for cnt in counts.values())
+    # if s len is odd, only one char can occur once
+    return list(counts.values()).count(1) == 1 and all(cnt in {1,2} for cnt in counts.values())
 
 # TODO: install mypy, see how to add types in python
+
