@@ -46,5 +46,21 @@ def ispalindrom_permut(s):
     # if s len is odd, only one char can occur once
     return list(counts.values()).count(1) == 1 and all(cnt in {1,2} for cnt in counts.values())
 
-# TODO: install mypy, see how to add types in python
+# 1.5 check if other is one (or 0) edits (insert, replace or delete) away from s
+# is again O(N), linear time
+def one_away(s: str, other: str):
+    if abs(len(s) - len(other)) > 1: return False
+    if len(s) == len(other): return sum([a != b for a, b in zip(s, other)]) in {0, 1}
+
+    # swap to handle delete as insert
+    if len(s) > len(other):
+        s, other = other, s
+    # handle insertion, e.g. "pales" to "palbes" requires one insert
+    inserted = False
+    if len(s) < len(other):
+        for i, c in enumerate(s):
+            if other[i+1 if inserted else i] != c:
+                if inserted: return False
+                inserted = True
+    return True
 

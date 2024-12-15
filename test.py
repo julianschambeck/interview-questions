@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -32,6 +32,14 @@ class TestSolutions(unittest.TestCase):
         self.assertTrue(ispalindrom_permut(''))
         self.assertFalse(ispalindrom_permut("cdaabb"))
         self.assertFalse(ispalindrom_permut("cd"))
+
+    def test_one_away(self):
+        self.assertTrue(one_away("pale", "bale")) # replace
+        self.assertTrue(one_away("pales", "pale")) # delete
+        self.assertFalse(one_away("paless", "pale"))
+        self.assertTrue(one_away("pale", "pales")) # insert
+        self.assertTrue(one_away("pale", "pale")) # 0 edits is ok too
+        self.assertFalse(one_away("pale", "bake")) # edits > 1 
 
 if __name__ == "__main__":
     unittest.main()
