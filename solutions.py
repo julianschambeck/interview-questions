@@ -64,3 +64,25 @@ def one_away(s: str, other: str):
                 inserted = True
     return True
 
+# 1.6 compress (here squeeze) string with character counts, e.g. aabbbc -> a2b3c1
+# Notes: lowercase and uppercase characters allowed, nothing else,
+# is compressed string not shorter than original one, return the latter.
+# should be O(N) because we go through each character once, despite having an inner loop
+def squeeze_with_counts(s: str):
+    out = ""
+    i = 0
+    while i < len(s):
+        cnt = 1
+        curr = s[i]
+        j = i+1
+        while j < len(s) and s[j] == curr:
+            cnt += 1
+            j += 1
+
+        out += curr + str(cnt)
+        # implicitly fallbacks to i+=1 if inner loop is not entered, cute
+        i = j
+        cnt = 1
+
+    ret = out if len(out) < len(s) else s
+    return ret

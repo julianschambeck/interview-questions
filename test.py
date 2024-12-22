@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -40,6 +40,16 @@ class TestSolutions(unittest.TestCase):
         self.assertTrue(one_away("pale", "pales")) # insert
         self.assertTrue(one_away("pale", "pale")) # 0 edits is ok too
         self.assertFalse(one_away("pale", "bake")) # edits > 1 
+
+    def test_squeeze_with_counts(self):
+        self.assertEqual(squeeze_with_counts("aabbbbccccccd"), "a2b4c6d1")
+        # expect original string because compressed one is longer here
+        self.assertEqual(squeeze_with_counts("aabbc"), "aabbc")
+        self.assertEqual(squeeze_with_counts("c"), "c")
+        self.assertEqual(squeeze_with_counts(""), "")
+        # some with capital letters
+        self.assertEqual(squeeze_with_counts("BBBBbbbbCC"), "B4b4C2")
+        self.assertEqual(squeeze_with_counts("BBBCCCd"), "B3C3d1")
 
 if __name__ == "__main__":
     unittest.main()
