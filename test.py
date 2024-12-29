@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -60,6 +60,8 @@ class TestSolutions(unittest.TestCase):
                 [0,1,0]]
         self.assertEqual(mat_rotate(mat), rot)
         self.assertEqual(mat_rotate([]), [])
+        self.assertEqual(mat_rotate_space(mat), rot)
+        self.assertEqual(mat_rotate_space([]), [])
 
 if __name__ == "__main__":
     unittest.main()

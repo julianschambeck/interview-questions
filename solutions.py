@@ -101,3 +101,29 @@ def mat_rotate(mat):
         for j in range(N): # now cols
             out[j][N-1-i] = mat[i][j]
     return out
+
+# Optimal solution that works in-place and thus is more space efficient. Still O(N^2) runtime though
+# Although it's more space efficient, it takes a lot longer to get the idea
+def mat_rotate_space(mat): # modifies mat in-place!
+    N = len(mat)
+    for layer in range(int(N/2)):
+        last = N-1 - layer
+        offset = 0
+        for i in range(layer, last):
+            top = mat[layer][i]
+            # could also do offset = i - layer instead
+            offset += 1
+
+            # move left (bottom) to top (left)
+            mat[layer][i] = mat[last - offset][layer]
+
+            # move bottom (right) to left (bottom)
+            mat[last - offset][layer] = mat[last][last - offset]
+
+            # move right (top) to bottom (right)
+            mat[last][last - offset] = mat[layer + offset][last]
+
+            # move top (left) to right (top)
+            mat[layer + offset][last] = top
+
+    return mat
