@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -50,6 +50,16 @@ class TestSolutions(unittest.TestCase):
         # some with capital letters
         self.assertEqual(squeeze_with_counts("BBBBbbbbCC"), "B4b4C2")
         self.assertEqual(squeeze_with_counts("BBBCCCd"), "B3C3d1")
+
+    def test_mat_rotate(self):
+        mat = [[0,0,0],
+            [1,1,1],
+            [0,1,0]]
+        rot = [[0,1,0],
+                [1,1,0],
+                [0,1,0]]
+        self.assertEqual(mat_rotate(mat), rot)
+        self.assertEqual(mat_rotate([]), [])
 
 if __name__ == "__main__":
     unittest.main()

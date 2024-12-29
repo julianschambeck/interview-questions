@@ -86,3 +86,18 @@ def squeeze_with_counts(s: str):
 
     ret = out if len(out) < len(s) else s
     return ret
+
+# 1.7 Rotate matrix
+# NxN Matrix, where each pixel has 4 bytes, rotate the image/matrix by 90 degrees clockwhise. try to do it in place as well.
+# Runtime is O(N^2), need to touch each element of matrix.
+def mat_rotate(mat):
+    N = len(mat) # cute
+    # 4 bytes could be RGB where each pos has sth. like [255, 255, 0, 0.5]. last dim here is the alpha channel with range [0,1]
+    # we need to move each element at pos (i,j), let's start with simple scalar values. example 3x3 matrix is
+    # init out with zeros and same length
+    out = [[0 for col in row] for row in mat]
+    # move each element at pos (i,j) to (j, N-1-i)
+    for i in range(N): # iter over rows
+        for j in range(N): # now cols
+            out[j][N-1-i] = mat[i][j]
+    return out
