@@ -127,3 +127,28 @@ def mat_rotate_space(mat): # modifies mat in-place!
             mat[layer + offset][last] = top
 
     return mat
+
+"""1.8 Zero Matrix
+If an element in the MxN matrix is zero (0) set its row and column to zeros.
+Runtime should be O(M * N), need to go through each element in matrix.
+Space is O(Z) where Z is the number of zeros in the matrix. O(Z) < O(M + N), the latter would be the worst case (all zeros)
+"""
+def zero_mat(mat):
+    # (idx, row/col) -> True
+    tozero = {}
+    M = len(mat)
+    N = len(mat[0])
+
+    for i, row in enumerate(mat):
+        for j, col in enumerate(row):
+            if col == 0:
+                tozero[(i, "row")] = True
+                tozero[(j, "col")] = True
+
+    for k in tozero.keys():
+        idx = k[0]
+        if k[1] == "row": mat[idx] = [0 for _ in range(N)]
+        else:
+            for i in range(M): mat[i][idx] = 0
+    
+    return mat

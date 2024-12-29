@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -62,6 +62,20 @@ class TestSolutions(unittest.TestCase):
         self.assertEqual(mat_rotate([]), [])
         self.assertEqual(mat_rotate_space(mat), rot)
         self.assertEqual(mat_rotate_space([]), [])
+
+    def test_zero_mat(self):
+        m = [[0, 1, 1, 1],
+            [1, 1, 1, 1],
+            [1, 1, 0, 1],
+            [1, 1, 0, 1]]
+        other = [row[:-1] for row in m] # 4x3 matrix
+        zeroed = [[0, 0, 0, 0],
+                [0, 1, 0, 1],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]]
+
+        self.assertEqual(zero_mat(m), zeroed)
+        self.assertEqual(zero_mat(other), [row[:-1] for row in zeroed])
 
 if __name__ == "__main__":
     unittest.main()
