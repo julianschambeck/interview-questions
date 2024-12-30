@@ -152,3 +152,18 @@ def zero_mat(mat):
             for i in range(M): mat[i][idx] = 0
     
     return mat
+
+# Sorting & Search
+
+def binary_search(list_sorted, ele):
+    start = 0
+    end = len(list_sorted) - 1
+    while start <= end:
+        mid = int((start + end) / 2)
+        current = list_sorted[mid]
+
+        if current < ele: start = mid + 1
+        elif current > ele: end = mid - 1
+        else: return True
+
+    return False

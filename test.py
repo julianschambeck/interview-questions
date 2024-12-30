@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat, binary_search
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -76,6 +76,14 @@ class TestSolutions(unittest.TestCase):
 
         self.assertEqual(zero_mat(m), zeroed)
         self.assertEqual(zero_mat(other), [row[:-1] for row in zeroed])
+
+    def test_binary_search(self):
+        nums = sorted([15, 10, 23, 50, 2, 1, 7])
+        chars = sorted(['d', 'c', 'a', 'g', 'z'])
+
+        self.assertTrue(binary_search(nums, 23))
+        self.assertFalse(binary_search(nums, 80))
+        self.assertTrue(binary_search(chars, 'z'))
 
 if __name__ == "__main__":
     unittest.main()
