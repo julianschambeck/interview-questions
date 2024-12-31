@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat, binary_search
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat, binary_search, ThreeStacks
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -84,6 +84,23 @@ class TestSolutions(unittest.TestCase):
         self.assertTrue(binary_search(nums, 23))
         self.assertFalse(binary_search(nums, 80))
         self.assertTrue(binary_search(chars, 'z'))
+
+    def test_three_stacks(self):
+        stacks = ThreeStacks(3)
+        stacks.push(0, 'a')
+        stacks.push(0, 'b')
+        stacks.push(0, 'c')
+
+        stacks.push(1, 0)
+        stacks.push(1, 1)
+        stacks.push(1, 2)
+
+        stacks.push(2, "some val")
+
+        stacks.pop(0)
+        stacks.pop(1)
+        stacks.pop(1)
+        stacks.pop(2)
 
 if __name__ == "__main__":
     unittest.main()

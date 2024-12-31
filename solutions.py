@@ -155,6 +155,7 @@ def zero_mat(mat):
 
 # Sorting & Search
 
+# Runtime is O(log n). Say n is the length of the list, 2^k = n => k = log n (base 2)
 def binary_search(list_sorted, ele):
     start = 0
     end = len(list_sorted) - 1
@@ -167,3 +168,33 @@ def binary_search(list_sorted, ele):
         else: return True
 
     return False
+
+# Stacks & Queues
+
+# Track 3 stacks in one array (list), each stack gets 1/3 of the list size as capacity, no resizing
+class ThreeStacks:
+    def __init__(self, stack_size):
+        # list to store the values of the three stacks
+        self.ls = [0] * stack_size*3
+        self.stack_size = stack_size
+        # stack num to current top of stack
+        self.stack_ptrs = {i: i * stack_size for i in range(3)}
+
+    def push(self, stack_num, val):
+        assert not self.isfull(stack_num), f"stack {stack_num} is already full"
+        self.ls[self.stack_ptrs[stack_num] + 1] = val
+        self.stack_ptrs[stack_num] += 1
+
+    def pop(self, stack_num):
+        assert not self.isempty(stack_num), f"stack {stack_num} is empty, cannot pop"
+        val = self.ls[self.stack_ptrs[stack_num]]
+        self.stack_ptrs[stack_num] -= 1
+        return val
+
+    def isfull(self, stack_num):
+        start = stack_num * self.stack_size
+        return self.stack_ptrs[stack_num] - start == 3
+
+    def isempty(self, stack_num):
+        start = stack_num * self.stack_size
+        return self.stack_ptrs[stack_num] == start
