@@ -218,16 +218,20 @@ class AnimalShelter:
     def __init__(self):
         # repr shelter queue as singly LinkedList (forward pointers only)
         self.head = None
+        # to have O(1) enqueue 
+        self.last = None
 
     def enqueue(self, animal):
-        if self.head is None: self.head = Node(animal)
-        else:
-            curr = self.head
-            while not curr.next is None:
-                curr = curr.next
+        n = Node(animal)
+        # queue is still empty 
+        if self.head is None:
+            self.head = n
+            self.last = n
+        else: # add to end of queue
+            self.last.next = n
+            self.last = n
 
-            curr.next = Node(animal)
-
+    # NOTE: to make dequeue O(1) as well we would need internally two queues, one for dogs, one for cats
     def dequeue(self, kind): # animal kind is 'Dog' or 'Cat'
         if self.head is None: return None
         prev = None
@@ -239,7 +243,10 @@ class AnimalShelter:
                 if prev is None: self.head = curr.next
                 # remove from middle or end of list
                 else: prev.next = curr.next
-                return curr
+
+                if self.head is None: self.last = self.head
+                elif curr == self.last: self.last = prev
+                return curr.value
 
             prev = curr
             curr = curr.next
@@ -250,7 +257,7 @@ class AnimalShelter:
         curr = self.head
         while curr is not None:
             # found animal of desired kind 
-            if curr.value[1] == kind: return curr
+            if curr.value[1] == kind: return curr.value
             curr = curr.next
         return None
 
@@ -262,13 +269,3 @@ class AnimalShelter:
             vals.append(f"{curr.value[1].value} {curr.value[0]}")
             curr = curr.next
         return " <- ".join(vals)
-
-shelter = AnimalShelter()
-shelter.enqueue(("Bobby", AnimalType.DOG))
-shelter.enqueue(("Rudi", AnimalType.DOG))
-shelter.enqueue(("Lucky",AnimalType.CAT))
-
-# ret = shelter.dequeue("Cat")
-ret = shelter.peek(AnimalType.CAT)
-print(shelter)
-print("ret is", ret.value)
