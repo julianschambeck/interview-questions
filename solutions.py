@@ -198,3 +198,77 @@ class ThreeStacks:
     def isempty(self, stack_num):
         start = stack_num * self.stack_size
         return self.stack_ptrs[stack_num] == start
+
+# 3.6 Animal Shelter. Implement queue using a LinkedList.
+# The shelter hand out animals on first-in first-out basis, i.e. the animal which has been in the shelter
+# the longest gets out first. One can choose the type of animal, dog or cat, but still the same rule applies.
+class Node:
+    def __init__(self, value):
+        # value should be tuple (name, dog/cat)
+        self.value = value
+        self.next = None
+
+from enum import Enum
+
+class AnimalType(Enum):
+    DOG = "Dog"
+    CAT = "Cat"
+
+class AnimalShelter:
+    def __init__(self):
+        # repr shelter queue as singly LinkedList (forward pointers only)
+        self.head = None
+
+    def enqueue(self, animal):
+        if self.head is None: self.head = Node(animal)
+        else:
+            curr = self.head
+            while not curr.next is None:
+                curr = curr.next
+
+            curr.next = Node(animal)
+
+    def dequeue(self, kind): # animal kind is 'Dog' or 'Cat'
+        if self.head is None: return None
+        prev = None
+        curr = self.head
+        while curr is not None:
+            # found animal of desired kind 
+            if curr.value[1] == kind:
+                # we remove from start of list
+                if prev is None: self.head = curr.next
+                # remove from middle or end of list
+                else: prev.next = curr.next
+                return curr
+
+            prev = curr
+            curr = curr.next
+        return None
+
+    def peek(self, kind):
+        if self.head is None: return None
+        curr = self.head
+        while curr is not None:
+            # found animal of desired kind 
+            if curr.value[1] == kind: return curr
+            curr = curr.next
+        return None
+
+    def __repr__(self):
+        if self.head is None: return "| |"
+        curr = self.head
+        vals = []
+        while curr is not None:
+            vals.append(f"{curr.value[1].value} {curr.value[0]}")
+            curr = curr.next
+        return " <- ".join(vals)
+
+shelter = AnimalShelter()
+shelter.enqueue(("Bobby", AnimalType.DOG))
+shelter.enqueue(("Rudi", AnimalType.DOG))
+shelter.enqueue(("Lucky",AnimalType.CAT))
+
+# ret = shelter.dequeue("Cat")
+ret = shelter.peek(AnimalType.CAT)
+print(shelter)
+print("ret is", ret.value)
