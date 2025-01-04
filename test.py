@@ -1,6 +1,6 @@
 import unittest
 import random
-from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat, binary_search, ThreeStacks
+from solutions import isunique, ispermut, URLify, ispalindrom_permut, one_away, squeeze_with_counts, mat_rotate, mat_rotate_space, zero_mat, binary_search, ThreeStacks, AnimalShelter, AnimalType
 
 class TestSolutions(unittest.TestCase):
     def test_isunique(self):
@@ -101,6 +101,23 @@ class TestSolutions(unittest.TestCase):
         stacks.pop(1)
         stacks.pop(1)
         stacks.pop(2)
+
+    def test_animal_shelter(self):
+        shelter = AnimalShelter()
+        shelter.enqueue(("Lucky", AnimalType.CAT))
+        shelter.enqueue(("Bobby", AnimalType.DOG))
+        shelter.dequeue(AnimalType.CAT) # test removal from start of linked list
+
+        shelter.enqueue(("Rudi", AnimalType.CAT))
+        shelter.dequeue(AnimalType.CAT) # now from end of linked list
+
+        shelter.enqueue(("Rudi", AnimalType.CAT))
+        shelter.enqueue(("Bibi", AnimalType.DOG))
+        animal = shelter.dequeue(AnimalType.CAT) # now from middle of linked list
+        self.assertEqual(animal[0], "Rudi")
+
+        animal = shelter.peek(AnimalType.DOG)
+        self.assertEqual(animal[0], "Bobby")
 
 if __name__ == "__main__":
     unittest.main()
